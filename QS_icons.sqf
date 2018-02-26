@@ -28,6 +28,7 @@ Installation:
 		[] execVM "scripts\QS_icons.sqf";    (if in a folder called scripts in your mission directory.)
 
 	Follow instructions posted in the below link
+		
 		http://forums.bistudio.com/showthread.php?184108-Soldier-Tracker-(-Map-and-GPS-Icons-)
 _________________________________________________________________/*/
 
@@ -751,11 +752,11 @@ _QS_fnc_iconUnits = {
 	if (!(_QS_ST_X select 63)) then {
 		if (isMultiplayer) then {
 			if (_isAdmin) then {
-				if (_x isEqualTo ((crew (vehicle _x)) select 0)) then {
-					{
+				{
+					if (_x isEqualTo ((crew (vehicle _x)) select 0)) then {
 						0 = _au pushBack _x;
-					} count allUnits;
-				};
+					};
+				} count allUnits;
 			} else {
 				{
 					if (((side _x) in _as) || {(captive _x)}) then {
