@@ -20,8 +20,11 @@ Last Modified:
 Installation: 
 
 	In client/player init (initPlayerLocal.sqf)
+		
 		[] execVM "QS_icons.sqf";
+		
 	or 
+		
 		[] execVM "scripts\QS_icons.sqf";    (if in a folder called scripts in your mission directory.)
 
 	Follow instructions posted in the below link
@@ -149,7 +152,7 @@ _QS_ST_iconTextFonts = [										// ARRAY (STRING). Icon Text Font. Only the un
 	'TahomaB'
 ];
 _QS_ST_otherDisplays = TRUE;									// BOOL. TRUE to add Unit/Vehicle Icon support for UAV Terminal and Artillery Computer. Runs a separate script to handle these displays. Only works if  _QS_ST_map_enableUnitIcons = TRUE;
-_QS_ST_MAPrequireGPSItem = TRUE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
+_QS_ST_MAPrequireGPSItem = FALSE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
 
 //==================================================================================//
 //=========================== CONFIGURE GPS (UNIT/VEHICLE) ICONS ===================//
@@ -160,7 +163,7 @@ _QS_ST_GPSshowNames = FALSE;									// BOOL. TRUE to show unit names on the GPS
 _QS_ST_GPSshowGroupOnly = FALSE;								// BOOL. TRUE to show only group members on the GPS display. Default TRUE.
 _QS_ST_iconTextSize_GPS = 0.05;									// NUMBER. Icon Text Size on GPS display. Default is 0.05.
 _QS_ST_iconShadowGPS = 1;										// NUMBER. Icon Shadow on GPS. 0 = no shadow. 1 = shadow. 2 = outline. Must be 0, 1, or 2. Default 1.
-_QS_ST_GPSrequireGPSItem = TRUE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
+_QS_ST_GPSrequireGPSItem = FALSE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
 
 //==================================================================================//
 //============================= CONFIGURE GROUP ICONS ==============================//
@@ -179,7 +182,7 @@ _QS_ST_groupIconOffset = [0.65,0.65];							// ARRAY (NUMBERS). [X,Y], offset po
 _QS_ST_groupTextFactionOnly = TRUE;								// BOOL. TRUE to show group icon text from ONLY the PLAYERS faction. FALSE will show text for all friendly/revealed factions. Default TRUE.
 _QS_ST_showCivilianGroups = FALSE;								// BOOL. TRUE to show Civilian groups. Must be whitelisted above in friendlySides. Default FALSE.
 _QS_ST_showOwnGroup = FALSE;									// BOOL. TRUE to show the Players own group icon. Default FALSE.
-_QS_ST_GRPrequireGPSItem = TRUE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
+_QS_ST_GRPrequireGPSItem = FALSE;								// BOOL. TRUE to require player have GPS in his assigned items. Default FALSE.
 
 //==================================================================================//
 //============================= CONFIGURE BONUS FEATURES ===========================//
