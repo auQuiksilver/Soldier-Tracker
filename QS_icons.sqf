@@ -411,7 +411,7 @@ _QS_fnc_iconText = {
 			_vn = '[AI]';
 		};
 	};
-	_isAdmin = ((serverCommandAvailable '#logout') && (_QS_ST_X select 86));
+	_isAdmin = (((call (missionNamespace getVariable 'BIS_fnc_admin')) isEqualTo 2) && (_QS_ST_X select 86));
 	if (((_v distance2D player) < (_QS_ST_X select 68)) || {(_isAdmin)}) then {
 		if ((_ms < 0.75) || {(_isAdmin)}) then {
 			if ((_ms > 0.25) || {(_isAdmin)}) then {
@@ -673,7 +673,7 @@ _QS_fnc_iconUnits = {
 	private _si = [EAST,WEST,RESISTANCE,CIVILIAN];
 	private _as = [];
 	private _au = [];
-	_isAdmin = ((serverCommandAvailable '#logout') && (_QS_ST_X select 86));
+	_isAdmin = (((call (missionNamespace getVariable 'BIS_fnc_admin')) isEqualTo 2) && (_QS_ST_X select 86));
 	if (!(playerSide isEqualTo CIVILIAN)) then {
 		if (!(_QS_ST_X select 74)) then {
 			_si = [EAST,WEST,RESISTANCE];
@@ -684,7 +684,7 @@ _QS_fnc_iconUnits = {
 			_au = allUnits + vehicles;
 		};
 		if ((_QS_ST_X select 61) isEqualTo 2) then {
-			_au = allMissionObjects 'All';
+			_au = entities [[],[],TRUE,TRUE];
 		};
 		_au;
 	};
