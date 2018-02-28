@@ -1019,7 +1019,7 @@ _QS_fnc_iconDrawGPS = {
 		{
 			if (!isNull _x) then {
 				_ve = vehicle _x;
-				if (!isNull _ve) then {
+				if (alive _ve) then {
 					_po = [_ve,2,_de] call (_QS_ST_X select 44);
 					_is = [_ve,2,_QS_ST_X] call (_QS_ST_X select 43);
 					_m drawIcon [
