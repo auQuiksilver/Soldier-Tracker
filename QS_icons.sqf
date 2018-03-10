@@ -1497,7 +1497,7 @@ waitUntil {
 };
 _QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
 if (_QS_ST_X select 0) then {
-	((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ['Draw',(_QS_ST_X select 49)];
+	((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ['Draw',(format ['_this call %1',(_QS_ST_X select 49)])];
 	if (_QS_ST_X select 82) then {
 		[_QS_ST_X] spawn {
 			scriptName 'Soldier Tracker by Quiksilver - Artillery Computer and UAV Terminal support';
@@ -1510,7 +1510,7 @@ if (_QS_ST_X select 0) then {
 				if (!(_QS_display1Opened)) then {
 					if (!isNull ((findDisplay 160) displayCtrl 51)) then {
 						_QS_display1Opened = TRUE;
-						((findDisplay 160) displayCtrl 51) ctrlAddEventHandler ['Draw',(_QS_ST_X select 49)];
+						((findDisplay 160) displayCtrl 51) ctrlAddEventHandler ['Draw',(format ['_this call %1',(_QS_ST_X select 49)])];
 					};
 				} else {
 					if (isNull ((findDisplay 160) displayCtrl 51)) then {
@@ -1520,7 +1520,7 @@ if (_QS_ST_X select 0) then {
 				if (!(_QS_display2Opened)) then {
 					if (!isNull((findDisplay -1) displayCtrl 500)) then {
 						_QS_display2Opened = TRUE;
-						((findDisplay -1) displayCtrl 500) ctrlAddEventHandler ['Draw',(_QS_ST_X select 49)];
+						((findDisplay -1) displayCtrl 500) ctrlAddEventHandler ['Draw',(format ['_this call %1',(_QS_ST_X select 49)])];
 					};
 				} else {
 					if (isNull ((findDisplay -1) displayCtrl 500)) then {
@@ -1568,7 +1568,7 @@ if (_QS_ST_X select 1) then {
 					if (!isNull (_x displayCtrl 101)) exitWith {
 						_gps = (_x displayCtrl 101);
 						_gps ctrlRemoveAllEventHandlers 'Draw';
-						_gps ctrlAddEventHandler ['Draw',(_QS_ST_X select 50)];
+						_gps ctrlAddEventHandler ['Draw',(format ['_this call %1',(_QS_ST_X select 50)])];
 						_exit = TRUE;
 					};
 				};
