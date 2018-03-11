@@ -252,11 +252,11 @@ _QS_fnc_isIncapacitated = {
 	_r;
 };
 _QS_fnc_iconColor = {
-	params ['_v','_ds','_QS_ST_X',['_ms',1]];
+	params [['_v',objNull],['_ds',1],'_QS_ST_X',['_ms',1]];
 	_u = effectiveCommander _v;
-	_ps = side _u;
+	_s = side (group _u);
 	private _exit = FALSE;
-	private _c = [0,0,0,0];
+	private _c = _QS_ST_X select 13;
 	private _a = 0;
 	if (!(_v isKindOf 'Man')) then {
 		if (_v getVariable ['QS_ST_drawEmptyVehicle',FALSE]) then {
@@ -270,7 +270,7 @@ _QS_fnc_iconColor = {
 					};
 				};
 			};
-		};		
+		};
 	};
 	if (_exit) exitWith {_c;};
 	private _useTeamColor = FALSE;
@@ -290,33 +290,29 @@ _QS_fnc_iconColor = {
 					_c set [3,0];
 				};
 			};
-			_c;
 		};
 	} else {
 		if ([_u,((_QS_ST_X select 15) select 0)] call (_QS_ST_X select 69)) then {
 			_exit = TRUE;
 			_c = _QS_ST_X select 16;
 			_c set [3,0];
-			_c;
 		};
 	};
 	if (_exit) exitWith {_c;};
-	if (!isNil {_u getVariable 'QS_ST_iconColor'}) then {
-		_ic = _u getVariable 'QS_ST_iconColor';
-		if (_ps isEqualTo (_ic select 1)) then {
-			_c = _ic select 0;
-			if (_useTeamColor) then {
-				if (isNull (objectParent _u)) then {
-					private _teamID = 0;
-					if (!isNil {assignedTeam _u}) then {
-						_teamID = ['MAIN','RED','GREEN','BLUE','YELLOW'] find (assignedTeam _u);
-						if (_teamID isEqualTo -1) then {
-							_teamID = 0;
-						};
-					};
-					_c = [_c,[1,0,0,1],[0,1,0.5,1],[0,0.5,1,1],[1,1,0,1]] select _teamID;
+	if (_useTeamColor) then {
+		if (isNull (objectParent _u)) then {
+			private _teamID = 0;
+			if (!isNil {assignedTeam _u}) then {
+				_teamID = ['MAIN','RED','GREEN','BLUE','YELLOW'] find (assignedTeam _u);
+				if (_teamID isEqualTo -1) then {
+					_teamID = 0;
 				};
 			};
+			if (_s isEqualTo EAST) then {_c = _QS_ST_X select 9;};
+			if (_s isEqualTo WEST) then {_c = _QS_ST_X select 10;};
+			if (_s isEqualTo RESISTANCE) then {_c = _QS_ST_X select 11;};
+			if (_s isEqualTo CIVILIAN) then {_c = _QS_ST_X select 12;};
+			_c = [_c,[1,0,0,1],[0,1,0.5,1],[0,0.5,1,1],[1,1,0,1]] select _teamID;
 			_c set [3,_a];
 			if (_ms > 0.80) then {
 				if (_ds isEqualTo 1) then {
@@ -327,11 +323,11 @@ _QS_fnc_iconColor = {
 		};
 	};
 	if (_exit) exitWith {_c;};
-	if (_ps isEqualTo EAST) exitWith {_c = _QS_ST_X select 9; _c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];_c;};};_u setVariable ['QS_ST_iconColor',[_c,_ps],FALSE];_c;};
-	if (_ps isEqualTo WEST) exitWith {_c = _QS_ST_X select 10;_c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];_c;};};_u setVariable ['QS_ST_iconColor',[_c,_ps],FALSE];_c;};
-	if (_ps isEqualTo RESISTANCE) exitWith {_c = _QS_ST_X select 11;_c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];_c;};};_u setVariable ['QS_ST_iconColor',[_c,_ps],FALSE];_c;};
-	if (_ps isEqualTo CIVILIAN) exitWith {_c = _QS_ST_X select 12;_c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];_c;};};_u setVariable ['QS_ST_iconColor',[_c,_ps],FALSE];_c;};
-	_c = _QS_ST_X select 13;if (_ds isEqualTo 1) then { if (_ms > 0.80) then {_c set [3,0];_c;};};_u setVariable ['QS_ST_iconColor',[_c,_ps],FALSE];_c;
+	if (_s isEqualTo EAST) exitWith {_c = _QS_ST_X select 9; _c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];};};_c;};
+	if (_s isEqualTo WEST) exitWith {_c = _QS_ST_X select 10;_c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];};};_c;};
+	if (_s isEqualTo RESISTANCE) exitWith {_c = _QS_ST_X select 11;_c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];};};_c;};
+	if (_s isEqualTo CIVILIAN) exitWith {_c = _QS_ST_X select 12;_c set [3,_a];if (_ds isEqualTo 1) then {if (_ms > 0.80) then {_c set [3,0];};};_c;};
+	_c = _QS_ST_X select 13;if (_ds isEqualTo 1) then { if (_ms > 0.80) then {_c set [3,0];};};_c;
 };
 _QS_fnc_iconType = {
 	params ['_u'];
