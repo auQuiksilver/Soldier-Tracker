@@ -307,9 +307,12 @@ _QS_fnc_iconColor = {
 			_c = _ic select 0;
 			if (_useTeamColor) then {
 				if (isNull (objectParent _u)) then {
-					private _teamID = ['MAIN','RED','GREEN','BLUE','YELLOW'] find (assignedTeam _u);
-					if (_teamID isEqualTo -1) then {
-						_teamID = 0;
+					private _teamID = 0;
+					if (!isNil {assignedTeam _u}) then {
+						_teamID = ['MAIN','RED','GREEN','BLUE','YELLOW'] find (assignedTeam _u);
+						if (_teamID isEqualTo -1) then {
+							_teamID = 0;
+						};
 					};
 					_c = [_c,[1,0,0,1],[0,1,0.5,1],[0,0.5,1,1],[1,1,0,1]] select _teamID;
 				};
