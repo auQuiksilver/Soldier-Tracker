@@ -933,7 +933,13 @@ _QS_fnc_mapVehicleShowCrew = {};
 _QS_fnc_iconDrawMap = {
 	_m = _this select 0;
 	_QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
-	if ((_QS_ST_X select 83) && (!('ItemGPS' in (assignedItems player)))) exitWith {};
+	private _hasGPSDevice = ("ACE_microDAGR" in items player) || {
+		{
+			if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]} || {_x isKindOf ["ItemcTab", configFile >> "CfgWeapons"]}) exitWith {true};
+			false
+		} forEach assignedItems player;
+	};
+	if ((_QS_ST_X select 83) && (!(_hasGPSDevice))) exitWith {};
 	if (diag_tickTime > (missionNamespace getVariable 'QS_ST_updateDraw_map')) then {
 		missionNamespace setVariable ['QS_ST_updateDraw_map',(diag_tickTime + 3),FALSE];
 		missionNamespace setVariable ['QS_ST_drawArray_map',([1,_QS_ST_X] call (_QS_ST_X select 46)),FALSE];
@@ -997,10 +1003,16 @@ _QS_fnc_iconDrawMap = {
 	};
 };
 _QS_fnc_iconDrawGPS = {
+	private _hasGPSDevice = ("ACE_microDAGR" in items player) || {
+		{
+			if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]} || {_x isKindOf ["ItemcTab", configFile >> "CfgWeapons"]}) exitWith {true};
+			false
+		} forEach assignedItems player;
+	};
 	if (
 		(!('MinimapDisplay' in ((infoPanel 'left') + (infoPanel 'right')))) ||
 		{(visibleMap)} ||
-		{((_QS_ST_X select 84) && (!('ItemGPS' in (assignedItems player))))}
+		{((_QS_ST_X select 84) && (!(_hasGPSDevice)))}
 	) exitWith {};
 	_m = _this select 0;
 	_QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
@@ -1500,10 +1512,11 @@ if (_QS_ST_X select 0) then {
 	if (_QS_ST_X select 82) then {
 		[_QS_ST_X] spawn {
 			scriptName 'Soldier Tracker by Quiksilver - Artillery Computer and UAV Terminal support';
-			private ['_QS_display1Opened','_QS_display2Opened'];
+			private ['_QS_display1Opened','_QS_display2Opened','_QS_display3Opened'];
 			_QS_ST_X = _this select 0;
 			_QS_display1Opened = FALSE;
 			_QS_display2Opened = FALSE;
+			_QS_display3Opened = FALSE;
 			disableSerialization;
 			for '_x' from 0 to 1 step 0 do {
 				if (!(_QS_display1Opened)) then {
@@ -1526,6 +1539,19 @@ if (_QS_ST_X select 0) then {
 						_QS_display2Opened = FALSE;
 					};		
 				};
+				if (!(_QS_display3Opened)) then {
+					if (!isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 40)) || {!isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 41))}) then {
+						_QS_display3Opened = TRUE;
+						// DAYMAP 40; Nightmap 41
+						((uiNamespace getVariable "Tao_FoldMap") displayCtrl 40) ctrlAddEventHandler ['Draw',(format ['_this call %1',(_QS_ST_X select 49)])];
+						((uiNamespace getVariable "Tao_FoldMap") displayCtrl 41) ctrlAddEventHandler ['Draw',(format ['_this call %1',(_QS_ST_X select 49)])];
+					};
+				} else {
+					if (isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 40)) || {isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 41))}) then {
+						_QS_display3Opened = FALSE;
+					};
+				};
+
 				uiSleep 0.25;
 			};
 		};
@@ -1691,22 +1717,34 @@ if (_QS_ST_X select 2) then {
 				_groupUpdateDelay = diag_tickTime + _groupUpdateDelay_timer;
 			};
 			if (_gpsRequired) then {
-				if (!('ItemGPS' in (assignedItems player))) then {
+				private _hasGPSDevice = ("ACE_microDAGR" in items player) || {
+					{
+						if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]} || {_x isKindOf ["ItemcTab", configFile >> "CfgWeapons"]}) exitWith {true};
+						false
+					} forEach assignedItems player;
+				};
+				if (!(_hasGPSDevice)) then {
 					setGroupIconsVisible [FALSE,FALSE];
 					waitUntil {
 						uiSleep 0.25;
-						('ItemGPS' in (assignedItems player))
+						("ACE_microDAGR" in items player) || {
+							{
+								if (_x isKindOf ["ItemGPS", configFile >> "CfgWeapons"] || {_x isKindOf ["UavTerminal_base", configFile >> "CfgWeapons"]} || {_x isKindOf ["ItemcTab", configFile >> "CfgWeapons"]}) exitWith {true};
+								false
+							} forEach assignedItems player;
+						};
 					};
 				};
 			};
-			if ((!(visibleMap)) && (isNull ((findDisplay 160) displayCtrl 51)) && (isNull ((findDisplay -1) displayCtrl 500))) then {
+
+			if ((!(visibleMap)) && (isNull ((findDisplay 160) displayCtrl 51)) && (isNull ((findDisplay -1) displayCtrl 500)) && (isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 40))) && (isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 41)))) then {
 				waitUntil {
 					uiSleep 0.25;
-					((visibleMap) || {(!isNull ((findDisplay 160) displayCtrl 51))} || {(!isNull ((findDisplay -1) displayCtrl 500))})
+					((visibleMap) || {(!isNull ((findDisplay 160) displayCtrl 51))} || {(!isNull ((findDisplay -1) displayCtrl 500))} || {(!isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 40)))} || {(!isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 41)))})
 				};
 				_refreshGroups = TRUE;
 			};
-			if ((visibleMap) || {(!isNull ((findDisplay 160) displayCtrl 51))} || {(!isNull ((findDisplay -1) displayCtrl 500))}) then {
+			if ((visibleMap) || {(!isNull ((findDisplay 160) displayCtrl 51))} || {(!isNull ((findDisplay -1) displayCtrl 500))} || {(!isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 40)))} || {(!isNull (((uiNamespace getVariable "Tao_FoldMap") displayCtrl 41)))}) then {
 				if ((ctrlMapScale ((findDisplay 12) displayCtrl 51)) isEqualTo 1) then {
 					if (groupIconsVisible select 0) then {
 						setGroupIconsVisible [FALSE,(groupIconsVisible select 1)];
