@@ -1208,6 +1208,7 @@ _QS_fnc_configGroupIcon = {
 	_grpSide = side _grpLeader;
 	if (_type isEqualTo 0) then {
 		_grpIconType = [_grp,_grpSize,_grpLeader_vehicle,_grpSide] call (_QS_ST_X select 52);		
+		if (_grpIconType isEqualTo "") exitWith{true};
 		_grp setVariable ['QS_ST_Group',1,FALSE];
 		_iconID = _grp addGroupIcon [_grpIconType,(_QS_ST_X select 38)];
 		_grp setGroupIcon [_iconID,_grpIconType];
