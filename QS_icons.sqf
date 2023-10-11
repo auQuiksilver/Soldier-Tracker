@@ -199,6 +199,7 @@ _QS_ST_iconSize_empty = 20;										// NUMBER. Icon size of unoccupied vehicles
 
 QS_ST_STR_text1 = 'Click to show group details';				// STRING. Text shown when a player passes Mouse over Group leader (only if _QS_ST_groupInteractiveIcons = TRUE;)
 QS_ST_STR_text2 = 'This group is not in your faction!';			// STRING. Text shown when a player clicks on a Group Icon of other faction. (only if _QS_ST_groupInteractiveIcons = TRUE;)
+QS_ST_STR_text3 = '[AUTO]';										// STRING. Text shown on map when a UAV is in autonomous mode.
 
 //==============================================================================================================================//
 //=============================================================== CONFIGURATION END ============================================//
@@ -669,16 +670,16 @@ _QS_fnc_iconText = {
 					if (_ms < 0.75) then {
 						if (_ms > 0.25) then {
 							if (_showMOS) then {
-								_t = format ['[AUTO] [%1]',_vt]; _t;
+								_t = format ['%2 [%1]',_vt,QS_ST_STR_text3]; _t;
 							} else {
-								_t = '[AUTO]'; _t;
+								_t = QS_ST_STR_text3; _t;
 							};
 						} else {
 							if (_ms < 0.006) then {
 								if (_showMOS) then {
-									_t = format ['[AUTO] [%1]',_vt]; _t;
+									_t = format ['%2 [%1]',_vt,QS_ST_STR_text3]; _t;
 								} else {
-									_t = '[AUTO]'; _t;
+									_t = QS_ST_STR_text3; _t;
 								};
 							} else {
 								_t = '';
