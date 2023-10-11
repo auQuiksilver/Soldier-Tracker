@@ -302,18 +302,11 @@ _QS_fnc_iconColor = {
 	if (_exit) exitWith {_c;};
 	if (_useTeamColor) then {
 		if (isNull (objectParent _u)) then {
-			private _teamID = 0;
-			if (!isNil {assignedTeam _u}) then {
-				_teamID = ['MAIN','RED','GREEN','BLUE','YELLOW'] find (assignedTeam _u);
-				if (_teamID isEqualTo -1) then {
-					_teamID = 0;
-				};
-			};
-			if (_s isEqualTo EAST) then {_c = _QS_ST_X select 9;};
-			if (_s isEqualTo WEST) then {_c = _QS_ST_X select 10;};
-			if (_s isEqualTo RESISTANCE) then {_c = _QS_ST_X select 11;};
-			if (_s isEqualTo CIVILIAN) then {_c = _QS_ST_X select 12;};
-			_c = [_c,[1,0,0,1],[0,1,0.5,1],[0,0.5,1,1],[1,1,0,1]] select _teamID;
+			if (_s isEqualTo EAST) then {_c = _QS_ST_X # 9;};
+			if (_s isEqualTo WEST) then {_c = _QS_ST_X # 10;};
+			if (_s isEqualTo RESISTANCE) then {_c = _QS_ST_X # 11;};
+			if (_s isEqualTo CIVILIAN) then {_c = _QS_ST_X # 12;};
+			_c = [_c,_c,[1,0,0,1],[0,1,0.5,1],[0,0.5,1,1],[1,1,0,1]] # ((['','MAIN','RED','GREEN','BLUE','YELLOW'] find (assignedTeam _u)) max 1);
 			_c set [3,_a];
 			if (_ms > 0.80) then {
 				if (_ds isEqualTo 1) then {
