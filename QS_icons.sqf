@@ -618,21 +618,21 @@ _QS_fnc_iconText = {
 			};
 		};
 		if (unitIsUAV _v) then {
-			if (isUavConnected _v) then {
-				_y = (UAVControl _v) select 0;
+			if (alive (remoteControlled (currentPilot _v))) then {
+				_y = remoteControlled (currentPilot _v);
 				if (_ms < 0.75) then {
 					if (_ms > 0.25) then {
 						if (_showMOS) then {
-							_t = format ['%1 [%2]',name _y,_vt]; _t;
+							_t = format ['%1 [%2]',name _y,_vt];
 						} else {
-							_t = format ['%1',name _y]; _t;
+							_t = format ['%1',name _y];
 						};
 					} else {
 						if (_ms < 0.006) then {
 							if (_showMOS) then {
-								_t = format ['%1 [%2]',name _y,_vt]; _t;
+								_t = format ['%1 [%2]',name _y,_vt];
 							} else {
-								_t = format ['%1',name _y]; _t;
+								_t = format ['%1',name _y];
 							};
 						} else {
 							_t = '';
@@ -642,26 +642,51 @@ _QS_fnc_iconText = {
 					_t = '';
 				};
 			} else {
-				if (_ms < 0.75) then {
-					if (_ms > 0.25) then {
-						if (_showMOS) then {
-							_t = format ['[AUTO] [%1]',_vt]; _t;
+				if (isUavConnected _v) then {
+					_y = (UAVControl _v) select 0;
+					if (_ms < 0.75) then {
+						if (_ms > 0.25) then {
+							if (_showMOS) then {
+								_t = format ['%1 [%2]',name _y,_vt]; _t;
+							} else {
+								_t = format ['%1',name _y]; _t;
+							};
 						} else {
-							_t = '[AUTO]'; _t;
+							if (_ms < 0.006) then {
+								if (_showMOS) then {
+									_t = format ['%1 [%2]',name _y,_vt]; _t;
+								} else {
+									_t = format ['%1',name _y]; _t;
+								};
+							} else {
+								_t = '';
+							};
 						};
 					} else {
-						if (_ms < 0.006) then {
+						_t = '';
+					};
+				} else {
+					if (_ms < 0.75) then {
+						if (_ms > 0.25) then {
 							if (_showMOS) then {
 								_t = format ['[AUTO] [%1]',_vt]; _t;
 							} else {
 								_t = '[AUTO]'; _t;
 							};
 						} else {
-							_t = '';
+							if (_ms < 0.006) then {
+								if (_showMOS) then {
+									_t = format ['[AUTO] [%1]',_vt]; _t;
+								} else {
+									_t = '[AUTO]'; _t;
+								};
+							} else {
+								_t = '';
+							};
 						};
+					} else {
+						_t = '';
 					};
-				} else {
-					_t = '';
 				};
 			};
 		};
