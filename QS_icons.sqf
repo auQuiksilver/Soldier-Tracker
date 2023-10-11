@@ -1003,6 +1003,7 @@ _QS_fnc_iconDrawGPS = {
 		{((_QS_ST_X select 84) && (!('ItemGPS' in (assignedItems player))))}
 	) exitWith {};
 	_m = _this select 0;
+	_mapDir = ctrlMapDir _m;
 	_QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
 	if (diag_tickTime > (missionNamespace getVariable 'QS_ST_updateDraw_gps')) then {
 		missionNamespace setVariable ['QS_ST_updateDraw_gps',(diag_tickTime + 3),FALSE];
@@ -1029,7 +1030,7 @@ _QS_fnc_iconDrawGPS = {
 						(_po select 0),
 						_is,
 						_is,
-						(_po select 1),
+						_mapDir + (_po select 1),
 						([_ve,2,_QS_ST_X] call (_QS_ST_X select 45)),
 						_sh,
 						_ts,
