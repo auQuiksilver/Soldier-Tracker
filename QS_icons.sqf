@@ -7,7 +7,7 @@ Author:
 	
 Version:
 
-	2.5.0 (released 24/02/2018 A3 1.80)
+	2.6.0 (released 11/10/2023 A3 2.14)
 
 Created: 
 
@@ -15,7 +15,7 @@ Created:
 	
 Last Modified: 
 
-	26/02/2018 A3 1.80 by Quiksilver
+	11/10/2023 A3 2.14 by Quiksilver
 	
 Installation: 
 
