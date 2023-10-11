@@ -933,7 +933,7 @@ _QS_fnc_mapVehicleShowCrew = {};
 _QS_fnc_iconDrawMap = {
 	_m = _this select 0;
 	_QS_ST_X = [] call (missionNamespace getVariable 'QS_ST_X');
-	if ((_QS_ST_X select 83) && (!('ItemGPS' in (assignedItems player)))) exitWith {};
+	if ((_QS_ST_X select 83) && ((player getSlotItemName 612) isEqualTo '')) exitWith {};
 	if (diag_tickTime > (missionNamespace getVariable 'QS_ST_updateDraw_map')) then {
 		missionNamespace setVariable ['QS_ST_updateDraw_map',(diag_tickTime + 3),FALSE];
 		missionNamespace setVariable ['QS_ST_drawArray_map',([1,_QS_ST_X] call (_QS_ST_X select 46)),FALSE];
@@ -1000,7 +1000,7 @@ _QS_fnc_iconDrawGPS = {
 	if (
 		(!('MinimapDisplay' in ((infoPanel 'left') + (infoPanel 'right')))) ||
 		{(visibleMap)} ||
-		{((_QS_ST_X select 84) && (!('ItemGPS' in (assignedItems player))))}
+		{((_QS_ST_X select 84) && ((player getSlotItemName 612) isEqualTo ''))}
 	) exitWith {};
 	_m = _this select 0;
 	_mapDir = ctrlMapDir _m;
@@ -1692,11 +1692,11 @@ if (_QS_ST_X select 2) then {
 				_groupUpdateDelay = diag_tickTime + _groupUpdateDelay_timer;
 			};
 			if (_gpsRequired) then {
-				if (!('ItemGPS' in (assignedItems player))) then {
+				if ((player getSlotItemName 612) isEqualTo '') then {
 					setGroupIconsVisible [FALSE,FALSE];
 					waitUntil {
 						uiSleep 0.25;
-						('ItemGPS' in (assignedItems player))
+						((player getSlotItemName 612) isNotEqualTo '')
 					};
 				};
 			};
